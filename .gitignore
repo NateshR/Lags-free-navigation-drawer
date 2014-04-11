@@ -1,0 +1,10 @@
+bin/
+gen/
+out/
+ant.properties
+build.xml
+LagFreeNavigationDrawer.iml
+local.properties
+proguard-project.txt
+project.properties
+.idea/

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="titles">
+        <item>Green</item>
+        <item>Orange</item>
+        <item>Blue</item>
+    </string-array>
+    <string name="app_name">Lag free navigation drawer</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+</resources>

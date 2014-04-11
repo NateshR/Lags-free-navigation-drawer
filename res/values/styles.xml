@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme"
+           parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/ActionBar.Solid</item>
+        <item name="android:actionBarWidgetTheme">@style/ActionBar.Widget</item>
+    </style>
+
+    <style name="ActionBar.Solid"
+           parent="@android:style/Widget.Holo.ActionBar">
+        <!-- заменив цвет снизу на transparent_white получим прозрачный actionBar ^_^-->
+        <item name="android:background">#ffffffff</item>
+        <item name="android:titleTextStyle">@style/ActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="ActionBar.TitleTextStyle"
+           parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#ff000000</item>
+        <!--<item name="android:textStyle">bold</item>-->
+    </style>
+
+    <style name="ActionBar.Widget"
+           parent="@android:style/Theme.Holo.Light">
+        <item name="android:textColorPrimary">#ff000000</item>
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textColorHint">#ff000000</item>
+    </style>
+
+</resources>
