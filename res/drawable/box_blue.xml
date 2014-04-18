@@ -24,7 +24,7 @@
                     android:radius="2dip"/>
             android:shape="rectangle"
 
-            <solid android:color="#ff004dff"></solid>
+            <solid android:color="#33b5e5"></solid>
         </shape>
     </item>
 
