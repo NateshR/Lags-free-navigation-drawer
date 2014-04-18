@@ -18,6 +18,8 @@ import android.widget.ListView;
 import com.vsrstudio.example.drawer.R;
 import com.vsrstudio.example.drawer.fragments.ContentFragment;
 
+import java.util.concurrent.TimeUnit;
+
 public class MainActivity extends Activity {
 
     private DrawerLayout mDrawerLayout;
@@ -26,22 +28,47 @@ public class MainActivity extends Activity {
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    private String[] mPlanetTitles;
+    private String[] leftDrawerTitles;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mTitle = mDrawerTitle = getTitle();
-        mPlanetTitles = getResources().getStringArray(R.array.titles);
+        leftDrawerTitles = getResources().getStringArray(R.array.titles);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, leftDrawerTitles));
+        mDrawerList.setItemChecked(0, true);
+
+//        Раскомментировать, чтобы лаг вернулся
+//        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+//        Закомментировать, чтобы лаг вернулся
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
+                mDrawerList.setItemChecked(position, true);
+                setTitle(leftDrawerTitles[position]);
+                mDrawerLayout.closeDrawer(mDrawerList);
+
+                // Смена фрагмента запускается в отдельном потоке и задерживается на 0.3 секунды,
+                // чтобы избежать пролагивания при переключении
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            TimeUnit.MILLISECONDS.sleep(300);
+                            selectItem(position);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+            }
+        });
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -110,10 +137,10 @@ public class MainActivity extends Activity {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
-        // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mPlanetTitles[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
+//        Раскомментировать, чтобы лаг вернулся
+//        mDrawerList.setItemChecked(position, true);
+//        setTitle(leftDrawerTitles[position]);
+//        mDrawerLayout.closeDrawer(mDrawerList);
     }
 
     public void setTitle(CharSequence title) {
